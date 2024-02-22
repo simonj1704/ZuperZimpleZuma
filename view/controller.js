@@ -7,32 +7,57 @@ window.addEventListener("load", start);
 
 function start() {
     console.log("JS is running");
-    createBalls();
-    displayBalls(model);
-    getCannonBall();
+
 }
 
-const model = new Model();
-const view = new View();
 
 
-function createBalls(){
-    for (let index = 0; index < 5; index++) {
-        model.add(model.randomBall());
+
+
+
+
+export default class Controller{
+    constructor(){
+        this.view = new View(this);
+        this.model = new Model();
+        this.cannonBall = this.model.randomBall();
+
+        
     }
-    model.dump();
-}
 
-function displayBalls(model){
-    let balls = [];
-    let i = 0; 
-    while (model.get(i) != null){
-        balls.push(model.get(i).data);
-        i++;
+    init(){
+        this.createBalls();
+        this.displayBalls(model);
+        this.getCannonBall();
     }
-    view.displayEntireChain(balls);
-}
 
-function getCannonBall(){
-    view.displayCannonBall(model.randomBall());
+    shootBall(index){
+        console.log("shootBall");
+        let ball = model.get(index);
+        model.insertBeforeNode(cannonBall, ball)
+        model.dump();
+        displayBalls(model);
+    }
+
+    createBalls(){
+        for (let index = 0; index < 5; index++) {
+            model.add(model.randomBall());
+        }
+        model.dump();
+    }
+    
+    displayBalls(model){
+        let balls = [];
+        let i = 0; 
+        while (model.get(i) != null){
+            balls.push(model.get(i).data);
+            i++;
+        }
+        view.displayEntireChain(balls);
+    }
+
+    getCannonBall(){
+        cannonBall = model.randomBall();
+        view.displayCannonBall(cannonBall);
+    }
 }

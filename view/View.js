@@ -4,20 +4,26 @@
 
 window.addEventListener("load", start);
 
+
+
+
+
 function start() {
   displayEntireChain(dummyModel);
   displayCannonBall(cannonBall);
 }
 
+
+
 export default class View{
-  constructor(){
+  constructor(controller){
     this.visualBalls = {
       "🔴": "red-ball.png",
       "🔵": "blue-ball.png",
       "🟡": "yellow-ball.png",
       "🟢": "green-ball.png"
     }
-
+    this.controller = controller;
   }
 
   displayEntireChain(model) {
@@ -69,7 +75,7 @@ export default class View{
       // notify that we want to insert a ball AFTER this (index)
       console.log("Insert new ball after index: " + index);
       // TODO: Notify controller that we want to insert a new ball here
-  
+      controller.shootBall(index);
     });
   }
 
