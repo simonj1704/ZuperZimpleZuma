@@ -8,7 +8,7 @@ export default class Model{
   }
 
   dump() {
-    let node = head;
+    let node = this.head;
     let output = "";
     while(node != null) {
       output += '"' + node.data + '"';
@@ -26,20 +26,20 @@ export default class Model{
   }
 
   add( data ) {
-    const node = {data: data, next: null, prev: tail};
-    if( head == null ) {
+    const node = {data: data, next: null, prev: this.tail};
+    if( this.head == null ) {
       // this is the first (and only) node
-      head = node;
-      tail = node;
+      this.head = node;
+      this.tail = node;
     } else {
-      tail.next = node;
-      tail = node;
+      this.tail.next = node;
+      this.tail = node;
     }
     return node;
   }
 
   get( index ) {
-    let node = head;
+    let node = this.head;
     while(index > 0) {
       node = node.next;
       index--;
@@ -50,8 +50,14 @@ export default class Model{
   insertBeforeNode( data, existingNode ) {
     const newNode = { data: data, next: existingNode, prev: existingNode.prev};
     // TODO: Doesn't handle if this is the first node
+    if (existingNode.prev == null){
+      this.head = newNode;
+      newNode.prev = null;
+      existingNode.prev = newNode;
+    } else {
     existingNode.prev.next = newNode;
     existingNode.prev = newNode;
+    }
   
     return newNode;
   }
@@ -59,8 +65,14 @@ export default class Model{
   insertAfterNode( data, existingNode ) {
     const newNode = { data: data, next: existingNode.next, prev: existingNode};
     // TODO: Doesn't handle if this is the last node
+    if (existingNode.next == null){
+      this.tail = newNode;
+      newNode.next = null;
+      existingNode.next = newNode;
+    } else {
     existingNode.next.prev = newNode;
     existingNode.next = newNode;
+    }
   
     return newNode;
   }
@@ -71,17 +83,17 @@ export default class Model{
   
     if(prev == null) {
       // this is the first node - make head point to the next one
-      head = existingNode.next;
+      this.head = existingNode.next;
       // and make this one point back to nothing
-      if(head)
-        head.prev = null;
+      if(this.head)
+      this.head.prev = null;
     } 
     
     if(next == null) {
       // this is the last node - make tail point to the one before
-      tail = existingNode.prev;
-      if(tail)
-        tail.next = null;
+      this.tail = existingNode.prev;
+      if(this.tail)
+      this.tail.next = null;
     }
   
     if(existingNode.prev)
@@ -112,14 +124,14 @@ export default class Model{
     
     if(matches.length >= 3) {
       matches.forEach( node => {
-        removeNode(node);
+        this.removeNode(node);
       });
-      dump();
-      findMatchesAround(difBefore);
+      this.dump();
+      this.findMatchesAround(difBefore);
     }
   }
 }
-
+/*
 let head = null;
 let tail = null;
 
@@ -234,7 +246,7 @@ function findMatchesAround(node){
     findMatchesAround(difBefore);
   }
 }
-
+*/
 /*add('🟡');
 add('🟡');
 add('🟡');

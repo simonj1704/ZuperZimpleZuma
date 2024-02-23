@@ -2,16 +2,16 @@
 
 // Some dummy-code to test that the view can be viewed ...
 
-window.addEventListener("load", start);
+//window.addEventListener("load", start);
 
 
 
 
 
-function start() {
+/*function start() {
   displayEntireChain(dummyModel);
   displayCannonBall(cannonBall);
-}
+}*/
 
 
 
@@ -34,17 +34,17 @@ export default class View{
     // iterate through model of balls <- there might be a different way of doing this!
     for(const ball of model) {
       // add ball
-      const visualBall = createVisualBall(ball);
+      const visualBall = this.createVisualBall(ball);
       visualChain.append(visualBall);
       // add button to click on ball
-      addButtonTo(visualBall);
+      this.addButtonTo(visualBall);
     }
   }
 
   displayCannonBall(ball) {
     const visualCannon = document.querySelector("#cannon");
     visualCannon.innerHTML = "";
-    const visualCannonBall = createVisualBall(ball);
+    const visualCannonBall = this.createVisualBall(ball);
     visualCannon.append(visualCannonBall);
   }
 
@@ -52,7 +52,7 @@ export default class View{
     const visualBall = document.createElement("div");
     visualBall.classList.add("ball");
     const image = document.createElement("img");
-    image.src = "images/"+visualBalls[ball];
+    image.src = "images/"+ this.visualBalls[ball];
     visualBall.append(image);
     return visualBall;
   }
@@ -64,7 +64,7 @@ export default class View{
   }
 
   addButtonTo(visualBall) {
-    const button = createButton();
+    const button = this.createButton();
     visualBall.append(button);
     // handle click
     button.addEventListener("click", () => {
@@ -73,21 +73,21 @@ export default class View{
       // NOTE: I'm absolutely sure there is a better way!
       
       // notify that we want to insert a ball AFTER this (index)
-      console.log("Insert new ball after index: " + index);
+      console.log("Insert 22 new ball after index: " + index);
       // TODO: Notify controller that we want to insert a new ball here
-      controller.shootBall(index);
+      this.controller.shootBall(index);
     });
   }
 
   insertNewBallAfter( index, newBall ) {
     // find the ball at this index (and the button right after)
     const lastVisualBall = document.querySelectorAll("#chain .ball")[index];
-    const newVisualBall = createVisualBall(newBall);
+    const newVisualBall = this.createVisualBall(newBall);
   
     lastVisualBall.after(newVisualBall);
-  
+    console.log(lastVisualBall)
     // add button to ball
-    const button = createButton();
+    const button = this.createButton();
     newVisualBall.append(button);
   
     return newVisualBall;
@@ -151,7 +151,7 @@ export default class View{
     }
   }
 }
-
+/*
 // ***** A dummy standin for the actual model *****
 //  remember to replace with real model, once that has been designed   
 const dummyModel = ["🔴", "🔵","🟡","🟡","🔵","🟢","🟢"];
@@ -220,6 +220,7 @@ function addButtonTo(visualBall) {
     console.log("Insert new ball after index: " + index);
     // TODO: Notify controller that we want to insert a new ball here
 
+
   });
 }
 
@@ -245,6 +246,7 @@ function removeVisualBall( visualBall ) {
 /**
  * Use simple animation to expand the space already occupied by a visualball 
  */
+/*
 function animateExpandSpaceForBall( visualBall ) {
   visualBall.classList.add("expand");
   visualBall.addEventListener("animationend", doneExpanding);
@@ -258,6 +260,7 @@ function animateExpandSpaceForBall( visualBall ) {
 /**
  * Use FLIP animation to animate a ball from the position of the canonball
  */
+/*
 function animateFromCanonBallToFinalPosition( visualBall ) {
   // First: Find the starting position of the ball - which is where the cannonball is
   const source = document.querySelector("#cannon .ball img").getBoundingClientRect();
@@ -302,3 +305,4 @@ function animateBallToDisappear( visualBall ) {
     // TODO: Notify controller when ball is gone
   }
 }
+*/
