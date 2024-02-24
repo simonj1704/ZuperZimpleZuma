@@ -24,13 +24,15 @@ export default class View{
       "🟢": "green-ball.png"
     }
     this.controller = controller;
+    this.ballChain = [];
   }
 
   displayEntireChain(model) {
     const visualChain = document.querySelector("#chain");
     // remove everything
     visualChain.innerHTML = "";
-  
+    this.ballChain = [];
+
     // iterate through model of balls <- there might be a different way of doing this!
     for(const ball of model) {
       // add ball
@@ -38,7 +40,10 @@ export default class View{
       visualChain.append(visualBall);
       // add button to click on ball
       this.addButtonTo(visualBall);
+      this.ballChain.push(visualBall);
+
     }
+    console.log(this.ballChain)
   }
 
   displayCannonBall(ball) {
@@ -49,8 +54,6 @@ export default class View{
   }
 
   createVisualBall(ball) {
-    console.log("ball")
-    console.log(ball)
     const visualBall = document.createElement("div");
     visualBall.classList.add("ball");
     const image = document.createElement("img");
@@ -85,14 +88,17 @@ export default class View{
     // find the ball at this index (and the button right after)
     const lastVisualBall = document.querySelectorAll("#chain .ball")[index];
     const newVisualBall = this.createVisualBall(newBall);
-  
     lastVisualBall.after(newVisualBall);
-    console.log("newVisualBall")
-    console.log(newVisualBall)
+    
+    
     // add button to ball
-    const button = this.createButton();
-    newVisualBall.append(button);
+    this.addButtonTo(newVisualBall);
   
+    this.ballChain.splice(index+1, 0, newVisualBall);
+
+    //Animation
+    this.animateExpandSpaceForBall(newVisualBall);
+    this.animateFromCanonBallToFinalPosition(newVisualBall);
     return newVisualBall;
   } 
 

@@ -21,7 +21,6 @@ export default class Controller{
         this.view = new View(this);
         this.model = new Model();
         this.cannonBall = this.model.randomBall();
-     
     }
 
     start(){
@@ -43,15 +42,32 @@ export default class Controller{
 
     insertOneBall(index){
         let ball = this.model.get(index);
-        this.model.insertBeforeNode(this.cannonBall, ball)
+        this.model.insertAfterNode(this.cannonBall, ball)
         this.model.dump();
-        let inBall = this.view.createVisualBall(this.cannonBall)
-        console.log("inBall")
-        console.log(inBall)
-        console.log("this.view.insertNewBallAfter(index, inBall)")
-        console.log(this.view.insertNewBallAfter(index, inBall))
-        this.view.animateExpandSpaceForBall(inBall);
+        let inBall = this.model.get(index+1).data;
+        this.view.insertNewBallAfter(index, inBall)
 
+        setTimeout(() => {
+            this.checkforMatches(this.model.get(index+1));
+        }, 1200);
+    }
+
+    checkforMatches(index){
+        let matches = this.model.findMatchesAround(index);
+        if (matches.length >= 3){
+            this.removeMatches(matches);
+
+        }
+    }
+
+    removeMatches(matches){
+        for (let index = 0; index < matches.length; index++) {
+            this.view.animateBallToDisappear(this.view.ballChain[matches[index]]);
+            
+        }
+        setTimeout(() => {
+        this.displayBalls(this.model);
+        }, 700);
     }
 
     createBalls(){

@@ -104,22 +104,26 @@ export default class Model{
 
   findMatchesAround(node){
     let matches = [];
+    let indexes = [];
     matches.push(node);
+    indexes.push(this.getIndexOfNode(node));
     // go left until we find a different color
     let before = node.prev;
     while(before != null && before.data == node.data) {
       matches.push(before);
+      indexes.push(this.getIndexOfNode(before));
       before = before.prev;
     }
-    let difBefore = before.prev;
   
+
     // go right until we find a different color
     let after = node.next;
     while(after != null && after.data == node.data) {
       matches.push(after);
+      indexes.push(this.getIndexOfNode(after));
       after = after.next;
     }
-  
+
     console.log(matches)
     
     if(matches.length >= 3) {
@@ -127,8 +131,19 @@ export default class Model{
         this.removeNode(node);
       });
       this.dump();
-      this.findMatchesAround(difBefore);
+
     }
+    return indexes;
+  }
+
+  getIndexOfNode(node){
+    let index = 0;
+    let currentNode = this.head;
+    while (currentNode != node){
+      currentNode = currentNode.next;
+      index++;
+    }
+    return index;
   }
 }
 /*
