@@ -46,7 +46,9 @@ export default class Controller{
         this.model.insertBeforeNode(this.cannonBall, ball)
         this.model.dump();
         let inBall = this.view.createVisualBall(this.cannonBall)
+        console.log("inBall")
         console.log(inBall)
+        console.log("this.view.insertNewBallAfter(index, inBall)")
         console.log(this.view.insertNewBallAfter(index, inBall))
         this.view.animateExpandSpaceForBall(inBall);
 

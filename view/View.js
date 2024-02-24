@@ -49,6 +49,8 @@ export default class View{
   }
 
   createVisualBall(ball) {
+    console.log("ball")
+    console.log(ball)
     const visualBall = document.createElement("div");
     visualBall.classList.add("ball");
     const image = document.createElement("img");
@@ -85,7 +87,8 @@ export default class View{
     const newVisualBall = this.createVisualBall(newBall);
   
     lastVisualBall.after(newVisualBall);
-    console.log(lastVisualBall)
+    console.log("newVisualBall")
+    console.log(newVisualBall)
     // add button to ball
     const button = this.createButton();
     newVisualBall.append(button);
