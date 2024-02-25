@@ -136,7 +136,7 @@ export default class View{
     // Hide the cannonball while animating
     document.querySelector("#cannon .ball img").classList.add("hide");
   
-    image.addEventListener("animationend", doneMoving);
+    image.addEventListener("animationend", doneMoving.bind(this));
   
     function doneMoving() {
       image.removeEventListener("animationend", doneMoving);
@@ -146,17 +146,19 @@ export default class View{
   
       document.querySelector("#cannon .ball img").classList.remove("hide");
       // TODO: Notify controller when ball has moved
+      this.controller.checkforMatches();
     }
   }
 
   animateBallToDisappear( visualBall ) {
     visualBall.classList.add("implode");
-    visualBall.addEventListener("animationend", doneDisappearing);
+    visualBall.addEventListener("animationend", doneDisappearing.bind(this));
   
     function doneDisappearing() {
       visualBall.classList.remove("implode");
       visualBall.removeEventListener("animationend", doneDisappearing);
       // TODO: Notify controller when ball is gone
+      this.controller.displayBalls(this.controller.model);
     }
   }
 }
